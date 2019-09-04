@@ -14,6 +14,7 @@ export {
         uids:         count &log;
         pipes:        count &log;
         pending:      count &log;
+        pending_stats: vector of string &log;
         recent:       count &log;
     };
 }
@@ -39,7 +40,22 @@ function log_state(c: connection, version: count, ev: string)
     info$pipes = |c$smb_state$pipe_map|;
     info$pending = |c$smb_state$pending_cmds|;
     info$recent  = |c$smb_state$recent_files|;
+
+    local tmp: table[string] of count;
+    local cmd_s: string;
+    for (cmd in c$smb_state$pending_cmds) {
+        cmd_s = c$smb_state$pending_cmds[cmd]$command;
+        if (cmd_s !in tmp)
+            tmp[cmd_s] = 0;
+        ++tmp[cmd_s];
+    }
+    info$pending_stats = vector();
+    for (cmd_s in tmp) {
+        info$pending_stats[|info$pending_stats|] = fmt("%s=%s", cmd_s, tmp[cmd_s]);
+    }
+
     Log::write(LOG, info);
+
 }
 
 event track(c: connection, version: count, ev: string)
