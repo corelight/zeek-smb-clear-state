@@ -16,6 +16,8 @@ export {
         pending:      count &log;
         pending_stats: vector of string &log;
         recent:       count &log;
+
+        missed_bytes: count &log;
     };
 }
 
@@ -54,6 +56,7 @@ function log_state(c: connection, version: count, ev: string)
         info$pending_stats[|info$pending_stats|] = fmt("%s=%s", cmd_s, tmp[cmd_s]);
     }
 
+    info$missed_bytes = c$conn$missed_bytes;
     Log::write(LOG, info);
 
 }
