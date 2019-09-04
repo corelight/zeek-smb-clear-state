@@ -1,0 +1,5 @@
+[package]
+description = Log smb state sizes
+script_dir = scripts
+#test_command = (cd testing && btest -d)
+tags = smb
