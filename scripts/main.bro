@@ -57,7 +57,7 @@ function log_state(c: connection, version: count, ev: string)
         info$pending_stats[|info$pending_stats|] = fmt("%s=%s", cmd_s, tmp[cmd_s]);
     }
 
-    info$missed_bytes = c$conn$missed_bytes;
+    info$missed_bytes = c?$conn ? c$conn$missed_bytes : 0;
     info$history = c$history;
     Log::write(LOG, info);
 
