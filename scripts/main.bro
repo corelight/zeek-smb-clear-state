@@ -18,6 +18,7 @@ export {
         recent:       count &log;
 
         missed_bytes: count &log;
+        history: string &log;
     };
 }
 
@@ -57,6 +58,7 @@ function log_state(c: connection, version: count, ev: string)
     }
 
     info$missed_bytes = c$conn$missed_bytes;
+    info$history = c$history;
     Log::write(LOG, info);
 
 }
