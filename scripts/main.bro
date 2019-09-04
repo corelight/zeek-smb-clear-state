@@ -62,12 +62,14 @@ event connection_state_remove(c: connection)
 }
 
 
-event smb1_message(c: connection, hdr: SMB1::Header, is_orig: bool) &priority=-10
+event smb1_message(c: connection, hdr: SMB1::Header, is_orig: bool) &priority=10
 {
-    schedule 5secs { track(c, 1, "new") };
+    if (!c?$smb_state )
+        schedule 5secs { track(c, 1, "new") };
 }
 
 event smb2_message(c: connection, hdr: SMB2::Header, is_orig: bool) &priority=-10
 {
-    schedule 5secs { track(c, 2, "new") };
+    if (!c?$smb_state )
+        schedule 5secs { track(c, 2, "new") };
 }
