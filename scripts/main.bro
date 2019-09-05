@@ -1,4 +1,4 @@
-module SMBState;
+module SMBStates;
 
 export {
     redef enum Log::ID += { LOG };
