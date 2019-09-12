@@ -1,5 +1,5 @@
 [package]
-description = Log smb state sizes
+description = reduce smb memory
 script_dir = scripts
 #test_command = (cd testing && btest -d)
 tags = smb
