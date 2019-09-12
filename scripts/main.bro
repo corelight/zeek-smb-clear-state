@@ -1,6 +1,6 @@
 module SMBClearMemory;
 
-event track(c: connection)
+event check_memory(c: connection)
 {
     if(!connection_exists(c$id))
         return;
@@ -15,17 +15,17 @@ event track(c: connection)
         c$smb_state$pending_cmds = table();
         next_sleep = 1mins;
     }
-    schedule next_sleep { track(c) };
+    schedule next_sleep { check_memory(c) };
 }
 
 event smb1_message(c: connection, hdr: SMB1::Header, is_orig: bool) &priority=10
 {
     if (!c?$smb_state )
-        schedule 60secs { track(c) };
+        schedule 60secs { check_memory(c) };
 }
 
 event smb2_message(c: connection, hdr: SMB2::Header, is_orig: bool) &priority=10
 {
     if (!c?$smb_state )
-        schedule 60secs { track(c) };
+        schedule 60secs { check_memory(c) };
 }
