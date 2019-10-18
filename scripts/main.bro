@@ -22,7 +22,7 @@ event check_memory(c: connection)
             $id=c$id,
             $msg=fmt("Broken smb2 connection detected. pending_cmds=%d, fid_map=%d", |c$smb_state$pending_cmds|, |c$smb_state$fid_map|),
             $n=|c$smb_state$pending_cmds| + |c$smb_state$fid_map|,
-            $identifier=c$uid,
+            $identifier=c$uid
         ]);
         c$smb_state$fid_map = table();
         c$smb_state$pending_cmds = table();
