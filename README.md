@@ -15,4 +15,4 @@ This package may not be needed in future versions of zeek.
 
 ### Threshold
 
-`SMBClearState::threshold` - The threshold for (|c$smb_state$pending_cmds| + |c$smb_state$fid_map|).
+`SMBClearState::threshold` - The threshold for `(|c$smb_state$pending_cmds| + |c$smb_state$fid_map|)`.
