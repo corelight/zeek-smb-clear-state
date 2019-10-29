@@ -1,4 +1,4 @@
-module SMBClearMemory;
+module SMBClearState;
 
 export {
     redef enum Notice::Type += {
@@ -6,7 +6,7 @@ export {
     };
 }
 
-event check_memory(c: connection)
+event check_state(c: connection)
 {
     if(!connection_exists(c$id))
         return;
@@ -28,17 +28,17 @@ event check_memory(c: connection)
         c$smb_state$pending_cmds = table();
         next_sleep = 1mins;
     }
-    schedule next_sleep { check_memory(c) };
+    schedule next_sleep { check_state(c) };
 }
 
 event smb1_message(c: connection, hdr: SMB1::Header, is_orig: bool) &priority=10
 {
     if (!c?$smb_state )
-        schedule 60secs { check_memory(c) };
+        schedule 60secs { check_state(c) };
 }
 
 event smb2_message(c: connection, hdr: SMB2::Header, is_orig: bool) &priority=10
 {
     if (!c?$smb_state )
-        schedule 60secs { check_memory(c) };
+        schedule 60secs { check_state(c) };
 }

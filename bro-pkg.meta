@@ -1,5 +1,5 @@
 [package]
-description = reduce smb memory
+description = reduce amount of tracked smb state
 script_dir = scripts
 #test_command = (cd testing && btest -d)
 tags = smb
