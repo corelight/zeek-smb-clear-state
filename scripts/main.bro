@@ -4,6 +4,11 @@ export {
     redef enum Notice::Type += {
         BrokenConnection,
     };
+
+    ## The threshold for (|c$smb_state$pending_cmds| + |c$smb_state$fid_map|).
+    ## If the size of those tables passes the threshold they are cleared and a
+    ## connection is logged as broken.
+    option threshold = 500;
 }
 
 event check_state(c: connection)
@@ -16,7 +21,7 @@ event check_state(c: connection)
 
     local next_sleep = 5mins;
 
-    if (|c$smb_state$pending_cmds| + |c$smb_state$fid_map| > 500) {
+    if (|c$smb_state$pending_cmds| + |c$smb_state$fid_map| > threshold) {
         NOTICE([
             $note=BrokenConnection,
             $id=c$id,
